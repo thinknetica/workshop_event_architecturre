@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  app:
+    image: ruby:3.2.1
+    command: /bin/bash -c "cd /var/taxi && bundle install && bundle exec rails s -b 0.0.0.0"
+    ports:
+      - 3000:3000
+    environment:
+      - DATABASE_URL=postgres://taxi:foobar@database:5432/taxi_development
+      - BUNDLE_PATH=vendor/bundle
+    volumes:
+      - ./:/var/taxi
+
+  database:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=taxi_development
+      - POSTGRES_USER=taxi
+      - POSTGRES_PASSWORD=foobar
