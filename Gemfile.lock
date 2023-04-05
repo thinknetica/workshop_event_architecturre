@@ -66,6 +66,10 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    aggregate_root (2.9.1)
+      ruby_event_store (= 2.9.1)
+    arkency-command_bus (0.4.1)
+      concurrent-ruby
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -139,6 +143,17 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.5.0)
       loofah (~> 2.19, >= 2.19.1)
+    rails_event_store (2.9.1)
+      activejob (>= 6.0)
+      activemodel (>= 6.0)
+      activesupport (>= 6.0)
+      aggregate_root (= 2.9.1)
+      arkency-command_bus (>= 0.4)
+      rails_event_store_active_record (= 2.9.1)
+      ruby_event_store (= 2.9.1)
+      ruby_event_store-browser (= 2.9.1)
+    rails_event_store_active_record (2.9.1)
+      ruby_event_store-active_record (= 2.9.1)
     railties (7.0.4.3)
       actionpack (= 7.0.4.3)
       activesupport (= 7.0.4.3)
@@ -153,6 +168,18 @@ GEM
       connection_pool
     reline (0.3.3)
       io-console (~> 0.5)
+    ruby_event_store (2.9.1)
+      concurrent-ruby (~> 1.0, >= 1.1.6)
+    ruby_event_store-active_record (2.9.1)
+      activerecord (>= 6.0)
+      ruby_event_store (= 2.9.1)
+    ruby_event_store-browser (2.9.1)
+      rack
+      ruby_event_store (= 2.9.1)
+    sidekiq (6.5.5)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      redis (>= 4.5.0)
     thor (1.2.1)
     timeout (0.3.2)
     tzinfo (2.0.6)
@@ -173,7 +200,9 @@ DEPENDENCIES
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
+  rails_event_store (~> 2.9.1)
   redis
+  sidekiq (~> 6.0)
   tzinfo-data
 
 RUBY VERSION

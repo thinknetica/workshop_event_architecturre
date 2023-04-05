@@ -36,3 +36,4 @@ group :development do
   # gem "spring"
 end
 
+gem "rails_event_store", "~> 2.9.1"
