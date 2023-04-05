@@ -16,8 +16,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_05_093536) do
 
   create_table "cars", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "number"
-    t.string "level", default: "0", null: false
-    t.string "state", default: "0", null: false
+    t.integer "level", default: 0, null: false
+    t.integer "state", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "driver_id"
