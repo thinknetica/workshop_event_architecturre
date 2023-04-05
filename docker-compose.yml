@@ -1,16 +1,35 @@
 version: '3'
 
+x-env: &base_env
+  - DATABASE_URL=postgres://taxi:foobar@database:5432/taxi_development
+  - BUNDLE_JOBS=4
+  - BUNDLE_PATH=vendor/bundle
+  - BUNDLE_FORGET_CLI_OPTIONS=true
+  - REDIS_URL=redis://redis:6379/1
+
 services:
   app:
     image: ruby:3.2.1
     command: /bin/bash -c "cd /var/taxi && bundle install && bundle exec rails s -b 0.0.0.0"
     ports:
       - 3000:3000
-    environment:
-      - DATABASE_URL=postgres://taxi:foobar@database:5432/taxi_development
-      - BUNDLE_JOBS=4
-      - BUNDLE_PATH=vendor/bundle
-      - BUNDLE_FORGET_CLI_OPTIONS=true
+    environment: *base_env
+    volumes:
+      - ./:/var/taxi
+
+  cable:
+    image: ruby:3.2.1
+    command: /bin/bash -c "cd /var/taxi && bundle install && bundle exec puma -p 3000 cable.ru -b tcp://0.0.0.0"
+    ports:
+      - 3003:3000
+    environment: *base_env
+    volumes:
+      - ./:/var/taxi
+
+  sidekiq:
+    image: ruby:3.2.1
+    command: /bin/bash -c "cd /var/taxi && bundle install && bundle exec sidekiq"
+    environment: *base_env
     volumes:
       - ./:/var/taxi
 
@@ -20,3 +39,8 @@ services:
       - POSTGRES_DB=taxi_development
       - POSTGRES_USER=taxi
       - POSTGRES_PASSWORD=foobar
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
