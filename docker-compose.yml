@@ -8,7 +8,9 @@ services:
       - 3000:3000
     environment:
       - DATABASE_URL=postgres://taxi:foobar@database:5432/taxi_development
+      - BUNDLE_JOBS=4
       - BUNDLE_PATH=vendor/bundle
+      - BUNDLE_FORGET_CLI_OPTIONS=true
     volumes:
       - ./:/var/taxi
 
